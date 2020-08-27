@@ -1,0 +1,88 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.4.0"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0"
+    }
+}
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.11.2")
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects {
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    apply plugin: 'io.gitlab.arturbosch.detekt'
+
+
+    detekt {
+        config = rootProject.files('config/detekt/detekt.yml')
+        baseline = file("${rootProject.projectDir}/config/detekt/baseline.xml") // a way of suppressing issues before introducing detekt
+        parallel = true
+        reports {
+            html.enabled = true // observe findings in your browser with structure and code snippets
+            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+        }
+    }
+
+    afterEvaluate {
+        tasks['check'].dependsOn 'detekt'
+        tasks['assemble'].dependsOn installGitHooks
+        tasks['clean'].dependsOn installGitHooks
+    }
+}
+
+static def isLinuxOrMacOs() {
+    def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+    return osName.contains('linux') || osName.contains('mac os') || osName.contains('macos')
+}
+
+task copyGitHooks(type: Copy) {
+    description "Copies the git hooks from ${rootDir}/hooks to the .git folder."
+    from("${rootDir}/hooks/") {
+        include '**/*.sh'
+        rename '(.*).sh', '$1'
+    }
+    into "${rootDir}/.git/hooks"
+    onlyIf { isLinuxOrMacOs() }
+}
+
+//Copies git hooks from /hooks folder into .git; currently used to run Detekt during push
+//Git hook installation
+task installGitHooks(type: Exec) {
+    description "Installs the pre-commit git hooks from ${rootDir}/hooks."
+    group 'git hooks'
+    workingDir rootDir
+    commandLine 'chmod'
+    args '-R', '+x', '.git/hooks/'
+    dependsOn copyGitHooks
+    onlyIf { isLinuxOrMacOs() }
+    doLast {
+        println('Git hook installed successfully.')
+    }
+}
