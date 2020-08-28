@@ -18,8 +18,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Wrap gradle
-      run: bash gradle wrapper
     - name: Unit tests
       run: bash ./gradlew test --stacktrace
 
