@@ -21,10 +21,11 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
 
     private var _binding: VB? = null
 
+    protected val binding get() = _binding!!
+
     @CallSuper
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: VB = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
-        _binding = binding
+        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding.apply {
             lifecycleOwner = this@BaseFragment
             setVariable(BR.viewModel, viewModel)
