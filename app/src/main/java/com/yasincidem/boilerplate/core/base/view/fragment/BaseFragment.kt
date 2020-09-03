@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.yasincidem.boilerplate.BR
 import com.yasincidem.boilerplate.core.base.view.IView
+import com.yasincidem.boilerplate.core.util.AutoClearedValue
 
 abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
     @LayoutRes private val layoutResourceId: Int
@@ -19,23 +20,19 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
 
     protected abstract val viewModel: VM
 
-    private var _binding: VB? = null
-
-    protected val binding get() = _binding!!
+    protected var binding by AutoClearedValue<VB>()
 
     @CallSuper
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        DataBindingUtil.inflate<VB>(inflater, layoutResourceId, container, false).also {
+            binding = it
+        }.root
+
+    @CallSuper
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
-            lifecycleOwner = this@BaseFragment
+            lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel, viewModel)
         }
-        return binding.root
     }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
-
 }
