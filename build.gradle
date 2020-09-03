@@ -4,6 +4,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://dl.bintray.com/andreyberyukhov/FlowReactiveNetwork"
+        }
     }
     dependencies {
         // NOTE: Do not place your application dependencies here; they belong
