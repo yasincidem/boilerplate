@@ -29,6 +29,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     compileOptions {
@@ -97,12 +98,13 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.0"
+    debugImplementation "androidx.fragment:fragment-testing:1.2.5"
 
     // Debug
     implementation 'com.jakewharton.timber:timber:4.7.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    debugImplementation "androidx.fragment:fragment-testing:1.2.5"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
 }
