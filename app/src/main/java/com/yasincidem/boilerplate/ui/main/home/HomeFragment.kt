@@ -11,7 +11,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     R.layout.fragment_home
 ) {
 
-    private val homeViewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val homeViewModel: HomeViewModel by navGraphViewModels(R.id.home) {
         defaultViewModelProviderFactory
     }
 

@@ -14,7 +14,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     R.layout.fragment_dashboard
 ) {
 
-    private val dashboardViewModel: DashboardViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val dashboardViewModel: DashboardViewModel by navGraphViewModels(R.id.dashboard) {
         defaultViewModelProviderFactory
     }
 
