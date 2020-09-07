@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.navGraphViewModels
 import com.yasincidem.boilerplate.R
-import com.yasincidem.boilerplate.core.base.view.fragment.BaseFragment
+import com.yasincidem.boilerplate.core.base.view.fragment.BaseScreenFragment
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper.ScreenNames.DASHBOARD
+import com.yasincidem.boilerplate.core.logger.log
 import com.yasincidem.boilerplate.core.util.ResultOf
 import com.yasincidem.boilerplate.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(
+class DashboardFragment : BaseScreenFragment<FragmentDashboardBinding, DashboardViewModel>(
     R.layout.fragment_dashboard
 ) {
 
@@ -18,7 +21,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         defaultViewModelProviderFactory
     }
 
-    override val viewModel: DashboardViewModel get() = dashboardViewModel
+    override val viewModel: DashboardViewModel
+        get() = dashboardViewModel
+
+    override val screenName: String
+        get() = DASHBOARD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

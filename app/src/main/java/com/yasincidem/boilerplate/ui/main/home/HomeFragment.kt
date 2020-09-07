@@ -2,12 +2,13 @@ package com.yasincidem.boilerplate.ui.main.home
 
 import androidx.navigation.navGraphViewModels
 import com.yasincidem.boilerplate.R
-import com.yasincidem.boilerplate.core.base.view.fragment.BaseFragment
+import com.yasincidem.boilerplate.core.base.view.fragment.BaseScreenFragment
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper.ScreenNames.HOME
 import com.yasincidem.boilerplate.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
+class HomeFragment : BaseScreenFragment<FragmentHomeBinding, HomeViewModel>(
     R.layout.fragment_home
 ) {
 
@@ -15,6 +16,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         defaultViewModelProviderFactory
     }
 
-    override val viewModel: HomeViewModel get() = homeViewModel
+    override val viewModel: HomeViewModel
+        get() = homeViewModel
+
+    override val screenName: String
+        get() =  HOME
 
 }

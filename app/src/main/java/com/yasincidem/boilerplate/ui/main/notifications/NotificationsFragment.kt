@@ -5,12 +5,13 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.yasincidem.boilerplate.R
-import com.yasincidem.boilerplate.core.base.view.fragment.BaseFragment
+import com.yasincidem.boilerplate.core.base.view.fragment.BaseScreenFragment
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper.ScreenNames.NOTIFICATIONS
 import com.yasincidem.boilerplate.databinding.FragmentNotificationsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, NotificationsViewModel>(
+class NotificationsFragment : BaseScreenFragment<FragmentNotificationsBinding, NotificationsViewModel>(
     R.layout.fragment_notifications
 ) {
 
@@ -18,8 +19,11 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         defaultViewModelProviderFactory
     }
 
-    override val viewModel: NotificationsViewModel get() = notificationsViewModel
+    override val viewModel: NotificationsViewModel
+        get() = notificationsViewModel
 
+    override val screenName: String
+        get() = NOTIFICATIONS
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
