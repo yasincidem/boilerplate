@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.yasincidem.boilerplate.R
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper
 import com.yasincidem.boilerplate.main.MainActivity
 import kotlinx.coroutines.*
 
@@ -15,8 +16,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        AnalyticsHelper.initAnalytics(this)
+
         activityScope.launch {
-            delay(2000)
+            delay(1500)
             finishSplashActivity()
         }
     }

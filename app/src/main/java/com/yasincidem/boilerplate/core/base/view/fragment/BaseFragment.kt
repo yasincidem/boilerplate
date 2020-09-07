@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.yasincidem.boilerplate.BR
 import com.yasincidem.boilerplate.core.base.view.IView
+import com.yasincidem.boilerplate.core.logger.AnalyticsHelper
 import com.yasincidem.boilerplate.core.util.AutoClearedValue
 
 abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
@@ -34,5 +36,9 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
             lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel, viewModel)
         }
+    }
+
+    fun sendEvent(eventName: String, eventParams: Bundle = bundleOf()) {
+        AnalyticsHelper.logEvent(eventName, eventParams)
     }
 }
