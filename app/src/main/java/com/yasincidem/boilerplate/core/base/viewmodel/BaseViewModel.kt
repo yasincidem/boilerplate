@@ -9,7 +9,7 @@ import ru.beryukhov.reactivenetwork.ReactiveNetwork
 
 open class BaseViewModel : ViewModel() {
 
-    val internetConnection = liveData {
+    val internetConnection = liveData<Boolean> {
         emitSource(ReactiveNetwork().observeInternetConnectivity().asLiveData(Dispatchers.Default))
     }
 

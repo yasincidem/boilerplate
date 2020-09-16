@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/themeNavGraph"
+    app:startDestination="@id/theme"
+    tools:ignore="UnusedNavigation">
+
+    <dialog
+        android:id="@+id/theme"
+        android:name="com.yasincidem.theme.ui.ThemeDialogFragment"
+        android:label="ThemeDialogFragment">
+
+        <argument
+            android:name="theme"
+            app:argType="com.yasincidem.theme.model.Theme" />
+
+    </dialog>
+
+</navigation>

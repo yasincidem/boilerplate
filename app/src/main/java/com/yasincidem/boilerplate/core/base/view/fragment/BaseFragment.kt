@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.annotation.UiThread
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -20,7 +21,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
     @LayoutRes private val layoutResourceId: Int
 ) : Fragment(), IView {
 
-    protected abstract val viewModel: VM
+    @UiThread
+    protected abstract fun viewModel(): VM
 
     protected var binding by AutoClearedValue<VB>()
 
@@ -34,7 +36,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.viewModel, viewModel)
+            setVariable(BR.viewModel, viewModel())
         }
     }
 

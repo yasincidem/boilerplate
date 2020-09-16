@@ -16,6 +16,6 @@ suspend fun <T> processResponse(request: suspend () -> Response<T>): ResultOf<T>
             ResultOf.failure(Errors.NetworkError(responseCode, responseMessage))
         }
     } catch (e: IOException) {
-        ResultOf.failure(Errors.NetworkError())
+        ResultOf.failure(Errors.NetworkError(desc = e.message))
     }
 }

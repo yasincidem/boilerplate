@@ -1,6 +1,9 @@
 package com.yasincidem.boilerplate.di
 
 import android.content.Context
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.createDataStore
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -18,6 +21,7 @@ import javax.inject.Singleton
 object ApiModule {
     private const val TIME_OUT_SECONDS = 10
     private const val BASE_URL = "https://5f467f36e165a60016ba9c53.mockapi.io/"
+    private const val DATA_STORE_NAME = "boilerplate_datastore"
 
     @Provides
     @Singleton
@@ -43,4 +47,11 @@ object ApiModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.createDataStore(
+            name = DATA_STORE_NAME
+        )
+    }
 }

@@ -4,23 +4,24 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.yasincidem.boilerplate.R
+import com.yasincidem.boilerplate.binding.disableTooltip
 import com.yasincidem.boilerplate.core.ext.errorSnack
 import com.yasincidem.boilerplate.core.ext.setupWithNavController
 import com.yasincidem.boilerplate.core.ext.string
 import com.yasincidem.boilerplate.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var currentNavController: LiveData<NavController>? = null
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-    private val snackBar: Snackbar by lazy { container.errorSnack(string(R.string.snackBar_error_title_no_internet_connection)) }
+    private val snackBar: Snackbar by lazy { binding.container.errorSnack(string(R.string.snackBar_error_title_no_internet_connection)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         }
+        setSupportActionBar(binding.topAppBar)
         observeInternetConnectivity()
         setContentView(binding.root)
     }
@@ -55,7 +57,11 @@ class MainActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
-        val bottomNavigationView = binding.navView
+        val bottomNavigationView = binding.navView.also {
+            it.disableTooltip()
+        }
+
+        snackBar.anchorView = bottomNavigationView
 
         val navGraphIds = listOf(R.navigation.home, R.navigation.dashboard, R.navigation.notifications)
 
