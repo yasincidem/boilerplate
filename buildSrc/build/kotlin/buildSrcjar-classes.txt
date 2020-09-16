@@ -1,0 +1,1 @@
+/Users/yasin/AndroidStudioProjects/EducateUS2/buildSrc/build/classes/kotlin/main/Deps.class:/Users/yasin/AndroidStudioProjects/EducateUS2/buildSrc/build/classes/kotlin/main/Versions.class
